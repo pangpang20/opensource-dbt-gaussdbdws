@@ -1,1 +1,16 @@
-site_name: My Docs
+site_name: 开源dbt-gaussdbdws用户参考
+use_directory_urls: false
+
+nav:
+- 开源dbt-gaussdbdws介绍: index.md
+- 相关介绍:
+  - dbt-core介绍: dbt-core/intro-dbt-core.md
+  - GaussDB介绍: dbt-gaussdbdws/intro-gaussdb.md
+  - GaussDB(DWS)介绍: dbt-gaussdbdws/intro-gaussdbdws.md
+  - dbt-gaussdbdws介绍: dbt-gaussdbdws/intro-dbt-gaussdbdws.md
+- 在华为云部署项目: deployment/intro_deploy.md
+- 项目开发心得体会: experience/intro_exprience.md
+
+theme: material
+plugins:
+    - search
