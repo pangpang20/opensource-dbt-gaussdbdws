@@ -6,7 +6,7 @@
 * 本地下载源码：dbt-gaussdbdws
 
   ```
-  git clone https://gitcode.com/HuaweiCloudDeveloper/OpenSourceForHuaweiWiki.git
+  git clone https://github.com/pangpang20/opensource-dbt-gaussdbdws.git
   ```
 
 * 参考[MkDocs安装指南](https://www.mkdocs.org/#installation), 安装 Python、Pip、MkDocs
