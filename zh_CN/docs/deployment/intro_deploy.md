@@ -109,7 +109,7 @@ ECS配置如下：
 
 参考 [基于EulerOS配置GitHub](https://bbs.huaweicloud.com/blogs/441850)
 
-#### 克隆项目
+#### 克隆项目并且制作镜像
 
 ```bash
 # 创建工作目录
@@ -146,7 +146,7 @@ docker images
 
 ```
 
-#### 上传到SWR
+#### 上传镜像到SWR
 
 进入`容器镜像服务 SWR`，点击 `组织管理` ,点击 `创建组织`
 
@@ -419,6 +419,7 @@ SQL语句同GaussDB一样。
 在容器中，测试GaussDB(DWS)连接，使用下面的命令：
 
 ```bash
+source .venv/bin/activate
 dbt debug
 
 ```
@@ -428,12 +429,80 @@ dbt debug
 
 执行 `dbt run` 来运行项目,将stg开头的表经过数据清洗转换后加载结果表。
 
+```bash
+dbt run
+
+```
+
+![](../assets/4-7.png)
+
+此时，可以在GaussDB(DWS)中查看到数据：
+
+```sql
+ANALYZE jaffle_shop.customers;
+ANALYZE jaffle_shop.order_items;
+ANALYZE jaffle_shop.orders;
+ANALYZE jaffle_shop.products;
+ANALYZE jaffle_shop.locations;
+ANALYZE jaffle_shop.supplies;
+ANALYZE jaffle_shop.metricflow_time_spine;
+
+SELECT
+    relname AS table_name,
+    reltuples::BIGINT AS table_row_count
+FROM
+    pg_class c
+JOIN
+    pg_namespace n ON c.relnamespace = n.oid
+WHERE
+    n.nspname = 'jaffle_shop'
+    AND c.relkind = 'r'
+    AND c.relname not like 'stg%'
+ORDER BY
+    table_name;
+
+
+```
+
+![](../assets/4-8.png)
+
 
 ### resource-service-python
 
 #### 创建并配置工作负载
 
+参考下图配置基本信息：
 
-#### 进入容器执行数据处理
+![](../assets/5-1.png)
 
-### 访问API接口
+参考下图配置容器基本信息：
+
+![](../assets/5-2.png)
+
+参考下图配置容器环境变量，使用[GaussDB(DWS)的信息](#gaussdbdws)：
+
+![](../assets/5-3.png)
+
+参考下图配置服务：
+
+![](../assets/5-4.png)
+
+
+工作负载运行成功后如下：
+
+![](../assets/5-5.png)
+
+
+#### 访问API接口
+
+参考下图获取访问地址：
+
+![](../assets/5-6.png)
+
+访问API（当然，DEMO没有做权限等控制）
+
+![](../assets/5-7.png)
+
+获取API数据
+
+![](../assets/5-8.png)
